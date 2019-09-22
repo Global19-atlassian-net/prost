@@ -76,7 +76,7 @@ pub mod groups {
 
 use std::error::Error;
 
-use bytes::{Buf, IntoBuf};
+use bytes::Buf;
 
 use prost::Message;
 
@@ -180,7 +180,6 @@ where
     msg.encode(&mut buf).unwrap();
     assert_eq!(expected_len, buf.len());
 
-    let mut buf = buf.into_buf();
     let roundtrip = M::decode(&mut buf).unwrap();
 
     if buf.has_remaining() {
