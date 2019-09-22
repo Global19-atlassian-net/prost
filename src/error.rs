@@ -1,8 +1,11 @@
 //! Protobuf encoding and decoding errors.
 
-use std::borrow::Cow;
+use alloc::borrow::Cow;
+use alloc::vec::Vec;
+use core::fmt;
+#[cfg(feature = "std")]
 use std::error;
-use std::fmt;
+#[cfg(feature = "std")]
 use std::io;
 
 /// A Protobuf message decoding error.
@@ -54,8 +57,10 @@ impl fmt::Display for DecodeError {
     }
 }
 
+#[cfg(feature = "std")]
 impl error::Error for DecodeError {}
 
+#[cfg(feature = "std")]
 impl From<DecodeError> for io::Error {
     fn from(error: DecodeError) -> io::Error {
         io::Error::new(io::ErrorKind::InvalidData, error)
@@ -103,8 +108,10 @@ impl fmt::Display for EncodeError {
     }
 }
 
+#[cfg(feature = "std")]
 impl error::Error for EncodeError {}
 
+#[cfg(feature = "std")]
 impl From<EncodeError> for io::Error {
     fn from(error: EncodeError) -> io::Error {
         io::Error::new(io::ErrorKind::InvalidInput, error)
